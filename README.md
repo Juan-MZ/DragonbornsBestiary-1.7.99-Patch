@@ -7,9 +7,12 @@ It ships none of the original author's assets: no `.esp`, no `.ini`, no `.swf`, 
 Papyrus scripts. All of that still comes from the original mod. The only file installed here is a
 rebuilt `DragonbornsBestiary.dll`.
 
-Upstream source: <https://github.com/jpsteel/skyrimbestiary> (last commit 2024-11-26), licensed
-**GPL-3.0**. The complete corresponding source for this build is in `source/complete-source/`, as
-GPL-3 requires. Not affiliated with JPSteel2 or Bethesda.
+**This patch's source:** <https://github.com/Juan-MZ/DragonbornsBestiary-1.7.99-Patch>
+**Upstream (JPSteel2's original):** <https://github.com/jpsteel/skyrimbestiary> (last commit 2024-11-26)
+
+The mod is licensed **GPL-3.0**, so the complete corresponding source for this build ships in
+`source/complete-source/` and lives in the patch repo above, as GPL-3 requires.
+Not affiliated with JPSteel2 or Bethesda.
 
 The mod's permissions explicitly allow modifying and releasing fixes without asking, so no
 permission request was needed for this one.
