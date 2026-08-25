@@ -1,0 +1,134 @@
+[center][size=5][b]The Dragonborn's Bestiary — 1.7.99 Compatibility Patch[/b][/size]
+[i]Unofficial patch. Not a mod. The original mod is required.[/i][/center]
+
+[line]
+
+[size=4][b]⚠ Read this first[/b][/size]
+
+[b]This is not a standalone mod.[/b] It is [b]only the recompiled DLL[/b] for The Dragonborn's Bestiary, so the mod works again on Skyrim SE/AE [b]1.7.99[/b] (the 20 August 2026 update).
+
+You [b]must[/b] have the original mod installed: [url=https://www.nexusmods.com/skyrimspecialedition/mods/123521]The Dragonborn's Bestiary[/url] v1.4.0 by [b]JPSteel2[/b].
+
+This patch contains [b]none[/b] of the original author's assets — no .esp, no .ini, no .swf, no translations, no Papyrus scripts. All of that still comes from their mod. The only file installed is a rebuilt [font=Courier New]DragonbornsBestiary.dll[/font].
+
+[line]
+
+[size=4][b]Why this exists — and what I want out of it[/b][/size]
+
+[b]Nothing. I want nothing out of this.[/b]
+
+No donation points, no endorsements needed, no ownership claimed. The 1.7.99 update broke a mod a lot of people love, and I didn't want the community to lose it while waiting.
+
+[b]All credit for The Dragonborn's Bestiary belongs to JPSteel2.[/b] Every idea, every feature, every line of the design is theirs. I did not add a feature, remove one, or change how anything works. I rebuilt their code against an updated library and fixed the places the new game version broke. That's the whole contribution — plumbing, not creativity.
+
+[quote]If JPSteel2 updates the mod themselves, [b]use their version and ignore this one[/b]. I'll pull this patch the moment it stops being necessary. It's a stopgap, not a fork.[/quote]
+
+JPSteel2's permissions already allow modifying their files and releasing fixes without asking, so no permission request was needed here — but the spirit is the same: this is their mod, and it stays theirs.
+
+The mod is licensed GPL-3.0, which requires that the source for any binary be made available. The complete corresponding source is included in the download, along with the diff against upstream ([url=https://github.com/jpsteel/skyrimbestiary]github.com/jpsteel/skyrimbestiary[/url]). Take any of it, freely. Not affiliated with JPSteel2 or Bethesda.
+
+[line]
+
+[size=4][b]Do you actually need this?[/b][/size]
+
+Install it only if you are on [b]Skyrim SE/AE 1.7.99[/b] and the Bestiary throws this error box on startup:
+
+[code]REL/Relocation.h(1104): failed to open address library file[/code]
+
+If you are still on 1.6.x or 1.5.97, [b]you do not need this[/b] — keep using the official release.
+
+[line]
+
+[size=4][b]Requirements[/b][/size]
+
+[list]
+[*][b]The Dragonborn's Bestiary 1.4.0[/b] — the original mod. Mandatory.
+[*][b]SKSE64 2.3.0[/b] — the 1.7.99 build
+[*][b]Address Library for SKSE Plugins[/b] — updated, must include [font=Courier New]versionlib-1-7-99-0.bin[/font]
+[*]Everything the original mod already lists (SPID / KID for its distributor files, SkyUI)
+[/list]
+
+[line]
+
+[size=4][b]Installation[/b][/size]
+
+Install the original mod 1.4.0 first, then add this patch on top.
+
+[b]Vortex[/b]
+[list=1]
+[*]Mods tab → [i]Install From File[/i] → pick the archive → Enable.
+[*]Vortex will report a [b]file conflict[/b] with the original mod — both ship the same DLL.
+[*]When prompted, tell Vortex that [b]this patch wins[/b]. In the rules dialog, set this patch to [i]Load After[/i] the original mod.
+[/list]
+
+[quote][b]This is the step people get wrong.[/b] If you pick the other option, Vortex keeps deploying the old DLL and it will look like the patch did nothing at all.[/quote]
+
+[b]Mod Organizer 2[/b]
+[i]Install a new mod from an archive[/i], then place this patch [b]below[/b] the original mod in the left pane. In MO2, lower wins.
+
+[b]Manual[/b]
+Copy [font=Courier New]SKSE\Plugins\DragonbornsBestiary.dll[/font] over the existing one — [b]only[/b] if you installed the mod manually. With Vortex or MO2, always go through the manager.
+
+[b]Uninstalling[/b]
+Disable or remove the patch. The original mod's DLL comes back and nothing else is touched. No save-game changes are involved — only the plugin binary is swapped.
+
+[b]Checking that it worked[/b]
+Launch the game. If it reaches the main menu with no error box, it worked. The plugin also writes [font=Courier New]Documents\My Games\Skyrim Special Edition\SKSE\DragonbornsBestiary.log[/font], which should end with [i]"Bestiary is in Player's pocket!"[/i] and no address library errors.
+
+[line]
+
+[size=4][b]What was broken[/b][/size]
+
+Skyrim 1.7.99 shipped a [b]new Address Library format[/b] — format 5, with a 96-byte header and a dense array indexed directly by ID. A 1.7.99 [font=Courier New]versionlib-1-7-99-0.bin[/font] begins with the bytes [font=Courier New]05 00 00 00[/font]. The released DLL was built against an older CommonLibSSE-NG that only understands formats 1 and 2, so it cannot read the file at all. That is the error you see.
+
+1.7.99 also recompiled Skyrim and moved several internal structures, which needs an updated CommonLib to model correctly.
+
+[line]
+
+[size=4][b]What was changed[/b][/size]
+
+[list]
+[*][b]Rebuilt against CommonLibSSE-NG 6.7.0[/b] — format 5 support plus the 1.7.99 layouts. CommonLib is now built from source, because the vcpkg port this mod used is still on 3.7.0.
+[*][b]Windows macro guards.[/b] [font=Courier New]SimpleIni.h[/font] pulls in [font=Courier New]windows.h[/font], and with the newer toolchain its macros broke two things: [font=Courier New]max[/font] broke [font=Courier New]std::numeric_limits<size_t>::max()[/font], and [font=Courier New]PlaySound[/font] rewrote [font=Courier New]RE::PlaySound[/font] into [font=Courier New]RE::PlaySoundA[/font], which doesn't exist. Fixed with [font=Courier New]NOMINMAX[/font] and [font=Courier New]WIN32_LEAN_AND_MEAN[/font].
+[*][b]Plugin declaration written by hand.[/b] CommonLib's CMake helper generates a declaration whose [font=Courier New]StructCompatibility[/font] field sits at the same offset as [font=Courier New]versionIndependenceEx[/font], so it can only ever write 0 or 1 — it cannot set the Address Library v5 compatibility flag. The declaration now uses [font=Courier New]SKSE::PluginVersionData[/font] directly, so the DLL correctly advertises that it can read format 5.
+[/list]
+
+[b]No feature was added, removed, or redesigned.[/b] The DLL still reports itself as version 1.4.0.
+
+[line]
+
+[size=4][b]Verification[/b][/size]
+
+[list]
+[*]The built DLL declares [font=Courier New]versionIndependenceEx = 3[/font] (struct-independent + Address Library v5) and [font=Courier New]versionIndependence = 1[/font] (uses Address Library), confirmed by reading the export out of the binary.
+[*]The mod uses [b]no[/b] hardcoded offsets — no [font=Courier New]RELOCATION_ID[/font], no [font=Courier New]write_call[/font]/[font=Courier New]write_branch[/font], no vtable hooks. Every game address it touches is resolved by CommonLib itself, so there was nothing mod-specific to re-derive for 1.7.99. That makes this a much lower-risk patch than one for a mod that hooks mid-function.
+[/list]
+
+[b]Honest disclaimer: this has not been play-tested through a full playthrough.[/b] [b]Back up your save[/b] before using it on a main playthrough, and please report anything odd in the comments.
+
+[line]
+
+[size=4][b]Permissions[/b][/size]
+
+This DLL is built from JPSteel2's GPL-3.0 code, so [b]their terms govern it, not mine[/b].
+
+[list]
+[*][b]Credit JPSteel2[/b] for the mod anywhere it's discussed. That part matters most.
+[*]The mod is GPL-3.0: if you redistribute this binary, you must pass the source along too. It's in the download, and upstream is on GitHub.
+[*]Translations of [i]this description[/i] are welcome — go ahead, no need to ask me.
+[*]I claim nothing over this patch beyond having compiled it. If you build on it, a mention is all I'd ask, and only if you feel like it.
+[/list]
+
+[line]
+
+[size=4][b]Credits[/b][/size]
+
+[list]
+[*][b]JPSteel2[/b] — creator of The Dragonborn's Bestiary. The mod is entirely their work, and all credit for it is theirs.
+[*][b]meh321[/b] — Address Library for SKSE Plugins.
+[*][b]CommonLibSSE-NG contributors[/b] (CharmedBaryon, alandtse, powerof3, Ryan-rsm-McKenzie) — the 1.7.99 and format-5 support this patch depends on.
+[*][b]The SKSE team[/b] — SKSE64.
+[/list]
+
+[center][i]Made for the community. Nothing asked in return.
+All credit to JPSteel2 — this only exists so their mod can keep being played.[/i][/center]

@@ -1,0 +1,7 @@
+# The .pdb (47 MB) only makes crash loggers show function names. Publish it as a
+# loose file on Nexus or a GitHub Release rather than versioning it in the repo.
+symbols/
+
+# The installable archive is regenerated from Data/ and Docs; publish it as a
+# Release or on Nexus.
+*.zip

@@ -1,0 +1,34 @@
+The Dragonborn's Bestiary
+Copyright (c) JPSteel2
+Licensed under the GNU General Public License v3.0 (see LICENSE).
+
+This package is NOT the mod. It is a compatibility patch containing only the SKSE
+plugin (DragonbornsBestiary.dll), recompiled from the official source, with no
+changes to the mod's design or features.
+
+It REQUIRES the original mod installed. None of the author's assets are
+redistributed here (.esp, .ini, .swf, translations, Papyrus scripts) - all of that
+comes from the original mod.
+
+Upstream source: https://github.com/jpsteel/skyrimbestiary
+
+CORRESPONDING SOURCE (GPL-3.0, section 6):
+The complete corresponding source for this binary is included in this download
+under source/complete-source/, and the diff against upstream is in
+source/DragonbornsBestiary-1.7.99-compat.patch.
+
+CHANGES FROM THE ORIGINAL:
+  - Rebuilt against CommonLibSSE-NG 6.7.0 to read Address Library format 5 and the
+    Skyrim 1.7.99 structure layouts. CommonLib is now built from source, because the
+    colorglass vcpkg port is still on 3.7.0.
+  - CMakeLists.txt: added NOMINMAX and WIN32_LEAN_AND_MEAN. SimpleIni.h includes
+    <windows.h>, whose `max` macro broke std::numeric_limits<size_t>::max() and whose
+    `PlaySound` macro rewrote RE::PlaySound into the nonexistent RE::PlaySoundA.
+  - CMakeLists.txt / src/main.cpp: the plugin declaration is now written by hand with
+    SKSE::PluginVersionData instead of the generated SKSEPluginInfo(). The generated
+    form cannot set the Address Library v5 compatibility flag, because its
+    StructCompatibility field occupies the same offset as versionIndependenceEx.
+  - vcpkg.json: updated baseline and dependency list; vcpkg-configuration.json removed
+    (the colorglass registry is no longer used).
+
+Not affiliated with JPSteel2 or Bethesda.

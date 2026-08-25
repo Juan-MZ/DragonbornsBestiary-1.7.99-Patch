@@ -1,0 +1,130 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f56143f..29a2613 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -38,7 +38,16 @@ endif()
+ # set(OUTPUT_FOLDER "C:/path/to/any/folder")
+ 
+ # Setup your SKSE plugin as an SKSE plugin!
+-find_package(CommonLibSSE CONFIG REQUIRED)
++# CommonLibSSE-NG 6.7.0, built from source.
++# The vcpkg port in the colorglass registry is stuck at 3.7.0, which predates both
++# Skyrim 1.7.99 and Address Library format 5 - hence the original error:
++#   REL/Relocation.h(1104): failed to open address library file
++set(ENABLE_SKYRIM_VR OFF)
++set(BUILD_TESTS OFF)
++add_subdirectory(external/CommonLibNG CommonLibNG EXCLUDE_FROM_ALL)
++# The add_commonlibsse_plugin() helper is only auto-included on CommonLib's prebuilt
++# path, so pull it in explicitly for the source build.
++include("${CMAKE_CURRENT_SOURCE_DIR}/external/CommonLibNG/cmake/CommonLibSSE.cmake")
+ add_commonlibsse_plugin(${PROJECT_NAME} SOURCES src/main.cpp
+     src/EventProcessor.cpp
+     src/Serialization.cpp
+@@ -50,6 +59,23 @@ add_commonlibsse_plugin(${PROJECT_NAME} SOURCES src/main.cpp
+ target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23) # <--- use C++23 standard
+ target_precompile_headers(${PROJECT_NAME} PRIVATE src/PCH.h) # <--- PCH.h is required!
+ 
++# SimpleIni.h pulls in <windows.h>, whose macros break two things here:
++#   - the `max` macro breaks std::numeric_limits<size_t>::max()  -> NOMINMAX
++#   - the `PlaySound` macro (from mmsystem.h) rewrites RE::PlaySound into
++#     RE::PlaySoundA, which does not exist                        -> WIN32_LEAN_AND_MEAN
++#       (WIN32_LEAN_AND_MEAN keeps windows.h from including mmsystem.h at all)
++target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN)
++
++# add_commonlibsse_plugin() generates a SKSEPluginInfo() declaration whose
++# StructCompatibility field lands on versionIndependenceEx, so it can only ever write
++# 0 or 1 - it cannot set kVersionIndependentEx_AddressLibraryV5 (bit 1). CommonLib only
++# sets that flag on the manual PluginVersionData path. Drop the generated file and
++# declare the plugin in main.cpp instead, so the DLL correctly advertises that it can
++# read Address Library format 5.
++get_target_property(_bestiary_sources ${PROJECT_NAME} SOURCES)
++list(REMOVE_ITEM _bestiary_sources "${CMAKE_CURRENT_BINARY_DIR}/__${PROJECT_NAME}Plugin.cpp")
++set_target_properties(${PROJECT_NAME} PROPERTIES SOURCES "${_bestiary_sources}")
++
+ # When your SKSE .dll is compiled, this will automatically copy the .dll into your mods folder.
+ # Only works if you configure DEPLOY_ROOT above (or set the SKYRIM_MODS_FOLDER environment variable)
+ if(DEFINED OUTPUT_FOLDER)
+diff --git a/src/main.cpp b/src/main.cpp
+index 6e18781..745dc50 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -74,4 +74,25 @@ extern "C" [[maybe_unused]] __declspec(dllexport) bool SKSEPlugin_Load(const SKS
+     logger::info("Bestiary is in Player's pocket!");
+ 
+     return true;
+-}
+\ No newline at end of file
++}
++
++// Plugin declaration, written by hand rather than via the add_commonlibsse_plugin()
++// helper: that helper's SKSEPluginInfo() path cannot set the Address Library v5
++// compatibility flag (see CMakeLists.txt). This build is linked against
++// CommonLibSSE-NG 6.7.0, which reads Address Library format 5, so it declares it.
++extern "C" [[maybe_unused]] __declspec(dllexport) constinit auto SKSEPlugin_Version = []() {
++    SKSE::PluginVersionData v{};
++    v.PluginName("DragonbornsBestiary"sv);
++    v.PluginVersion(REL::Version{ 1, 4, 0, 0 });
++    v.UsesAddressLibrary();   // version independence: address library
++    v.UsesNoStructs();        // struct-layout independent
++    return v;                 // versionIndependenceEx also carries AddressLibraryV5 by default
++}();
++
++extern "C" [[maybe_unused]] __declspec(dllexport) bool SKSEPlugin_Query(const SKSE::QueryInterface*,
++                                                                        SKSE::PluginInfo* pluginInfo) {
++    pluginInfo->infoVersion = SKSE::PluginInfo::kVersion;
++    pluginInfo->name = SKSEPlugin_Version.pluginName;
++    pluginInfo->version = SKSEPlugin_Version.pluginVersion;
++    return true;
++}
+diff --git a/vcpkg-configuration.json b/a/vcpkg-configuration.json
+deleted file mode 100644
+index afab56d..0000000
+--- a/vcpkg-configuration.json
++++ /dev/null
+@@ -1,20 +0,0 @@
+-{
+-  "default-registry": {
+-    "kind": "git",
+-    "repository": "https://github.com/microsoft/vcpkg.git",
+-    "baseline": "7a57b42f959ad138a5283477fe2e6c97a7cb852f"
+-  },
+-    "registries": [
+-      {
+-        "kind": "git",
+-        "repository": "https://gitlab.com/colorglass/vcpkg-colorglass",
+-        "baseline": "eb2f2bd143b8f7c52b57ef5a822163b56f7be7d6",
+-        "packages": [
+-          "commonlibsse-ng",
+-          "bethesda-skyrim-scripts",
+-          "script-extender-common",
+-          "skse"
+-        ]
+-      }
+-    ]
+-}
+\ No newline at end of file
+diff --git a/vcpkg.json b/vcpkg.json
+index 5ad1cb9..8fdf007 100644
+--- a/vcpkg.json
++++ b/vcpkg.json
+@@ -1,9 +1,16 @@
+ {
+     "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
++    "name": "dragonbornsbestiary",
++    "version": "1.4.0",
++    "builtin-baseline": "00c5775211f45cd08b37fce0484b4cb940e422ab",
+     "dependencies": [
+-      "commonlibsse-ng",
+       "simpleini",
+       "nlohmann-json",
+-      "xbyak"
++      "xbyak",
++      "spdlog",
++      "fmt",
++      "rapidcsv",
++      "directxmath",
++      "directxtk"
+     ]
+-}
+\ No newline at end of file
++}

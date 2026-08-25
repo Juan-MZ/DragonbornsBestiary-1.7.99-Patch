@@ -1,0 +1,11 @@
+===============================================================
+SHORT DESCRIPTION  ->  Nexus "Summary" field
+Nexus limits this field to roughly 255 characters.
+===============================================================
+
+Unofficial compatibility patch that gets The Dragonborn's Bestiary working again on Skyrim 1.7.99. Just the recompiled DLL - the original mod is required. All credit to JPSteel2. Made for the community, nothing asked in return.
+
+===============================================================
+The mod's permissions already allow modifying and releasing
+fixes without asking, so no permission request is needed.
+===============================================================
