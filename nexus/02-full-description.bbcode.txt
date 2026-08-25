@@ -1,7 +1,7 @@
 [center][size=5][b]The Dragonborn's Bestiary — 1.7.99 Compatibility Patch[/b][/size]
 [i]Unofficial patch. Not a mod. The original mod is required.[/i][/center]
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]⚠ Read this first[/b][/size]
 
@@ -11,7 +11,7 @@ You [b]must[/b] have the original mod installed: [url=https://www.nexusmods.com/
 
 This patch contains [b]none[/b] of the original author's assets — no .esp, no .ini, no .swf, no translations, no Papyrus scripts. All of that still comes from their mod. The only file installed is a rebuilt [font=Courier New]DragonbornsBestiary.dll[/font].
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]Why this exists — and what I want out of it[/b][/size]
 
@@ -30,7 +30,7 @@ Everything I did is public and reviewable before you download anything:
 
 Not affiliated with JPSteel2 or Bethesda.
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]Do you actually need this?[/b][/size]
 
@@ -40,7 +40,7 @@ Install it only if you are on [b]Skyrim SE/AE 1.7.99[/b] and the Bestiary throws
 
 If you are still on 1.6.x or 1.5.97, [b]you do not need this[/b] — keep using the official release.
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]Requirements[/b][/size]
 
@@ -51,7 +51,7 @@ If you are still on 1.6.x or 1.5.97, [b]you do not need this[/b] — keep using 
 [*]Everything the original mod already lists (SPID / KID for its distributor files, SkyUI)
 [/list]
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]Installation[/b][/size]
 
@@ -78,7 +78,7 @@ Disable or remove the patch. The original mod's DLL comes back and nothing else 
 [b]Checking that it worked[/b]
 Launch the game. If it reaches the main menu with no error box, it worked. The plugin also writes [font=Courier New]Documents\My Games\Skyrim Special Edition\SKSE\DragonbornsBestiary.log[/font], which should end with [i]"Bestiary is in Player's pocket!"[/i] and no address library errors.
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]What was broken[/b][/size]
 
@@ -86,7 +86,7 @@ Skyrim 1.7.99 shipped a [b]new Address Library format[/b] — format 5, with a 9
 
 1.7.99 also recompiled Skyrim and moved several internal structures, which needs an updated CommonLib to model correctly.
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]What was changed[/b][/size]
 
@@ -98,7 +98,7 @@ Skyrim 1.7.99 shipped a [b]new Address Library format[/b] — format 5, with a 9
 
 [b]No feature was added, removed, or redesigned.[/b] The DLL still reports itself as version 1.4.0.
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]Verification[/b][/size]
 
@@ -109,21 +109,21 @@ Skyrim 1.7.99 shipped a [b]new Address Library format[/b] — format 5, with a 9
 
 [b]Honest disclaimer: this has not been play-tested through a full playthrough.[/b] [b]Back up your save[/b] before using it on a main playthrough, and please report anything odd in the comments.
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]Source code[/b][/size]
 
-The mod is licensed [b]GPL-3.0[/b], which requires that the source for any distributed binary be made available. It is, in three places:
+The mod is licensed [b]GPL-3.0[/b], and so is CommonLibSSE-NG 6.7.0 which the DLL links against — so the combined binary is GPL-3 with no conflict, exactly as it was before the patch. GPL-3 requires that the source for any distributed binary be made available. It is, in three places:
 
 [list]
 [*][b]This patch:[/b] [url=https://github.com/Juan-MZ/DragonbornsBestiary-1.7.99-Patch]github.com/Juan-MZ/DragonbornsBestiary-1.7.99-Patch[/url] — the complete corresponding source for the DLL, plus the diff against upstream.
-[*][b]Inside the download:[/b] [font=Courier New]source/complete-source/[/font] and [font=Courier New]source/DragonbornsBestiary-1.7.99-compat.patch[/font], so you never have to trust a link.
+[*][b]What the download itself contains:[/b] the DLL, the GPL-3 text, the CommonLibSSE-NG exceptions, the upstream licence and a notice listing every change. The source is not bundled with it — GPL-3 section 6(d) lets it be offered from a designated place instead, which is the repository above.
 [*][b]Upstream (JPSteel2's original):[/b] [url=https://github.com/jpsteel/skyrimbestiary]github.com/jpsteel/skyrimbestiary[/url]
 [/list]
 
 The diff applies cleanly to upstream [font=Courier New]main[/font] with [font=Courier New]git apply[/font]. If JPSteel2 wants to merge it, it's there and it's theirs.
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]Permissions[/b][/size]
 
@@ -136,7 +136,7 @@ This DLL is built from JPSteel2's GPL-3.0 code, so [b]their terms govern it, not
 [*]I claim nothing over this patch beyond having compiled it. If you build on it, a mention is all I'd ask, and only if you feel like it.
 [/list]
 
-[line]
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [size=4][b]Credits[/b][/size]
 

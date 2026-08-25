@@ -2,6 +2,12 @@ The Dragonborn's Bestiary
 Copyright (c) JPSteel2
 Licensed under the GNU General Public License v3.0 (see LICENSE).
 
+The compiled DragonbornsBestiary.dll also statically links CommonLibSSE-NG 6.7.0
+(commit 3d8161461791), which is GPL-3.0-or-later WITH a Modding Exception and a
+GPL-3.0 Linking Exception (see LICENSE-CommonLibSSE-NG-EXCEPTIONS.md). Both the
+mod and the library are GPL-3, so the combined binary is GPL-3 with no conflict -
+this was already the case before the patch.
+
 This package is NOT the mod. It is a compatibility patch containing only the SKSE
 plugin (DragonbornsBestiary.dll), recompiled from the official source, with no
 changes to the mod's design or features.

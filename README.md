@@ -10,8 +10,10 @@ rebuilt `DragonbornsBestiary.dll`.
 **This patch's source:** <https://github.com/Juan-MZ/DragonbornsBestiary-1.7.99-Patch>
 **Upstream (JPSteel2's original):** <https://github.com/jpsteel/skyrimbestiary> (last commit 2024-11-26)
 
-The mod is licensed **GPL-3.0**, so the complete corresponding source for this build ships in
-`source/complete-source/` and lives in the patch repo above, as GPL-3 requires.
+The mod is licensed **GPL-3.0**, so the complete corresponding source for this build is published
+in the patch repository above, under `source/complete-source/`. GPL-3 §6(d) allows offering it from
+a designated place rather than bundling it with the binary, so the installable archive carries the
+DLL, the licences and a notice of every change.
 Not affiliated with JPSteel2 or Bethesda.
 
 The mod's permissions explicitly allow modifying and releasing fixes without asking, so no
