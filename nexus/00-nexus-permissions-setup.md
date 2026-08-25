@@ -60,7 +60,8 @@ Why GPL-3: the DLL statically links CommonLibSSE-NG 6.7.0, which is GPL-3.0-or-l
 so the combined work has to be GPL-3 as well.
 JPSteel2's original mod is already GPL-3.0, so there is no change in licence here at all.
 
-The complete corresponding source ships inside the download, as GPL-3 requires.
+The complete corresponding source is published in the repository linked above,
+as GPL-3 section 6(d) allows.
 ```
 
 ## Permission dropdowns
@@ -106,4 +107,4 @@ opting in contradicts it, and the work is overwhelmingly the original author's.
 |---|---|
 | `*-Compatibility-Patch.zip` | Main file. Contains the DLL plus `Docs/` with the GPL-3 text, the CommonLibSSE-NG exceptions, the upstream licence and the notice of changes |
 | `symbols/*.pdb` | Optional file. Only useful for crash logs |
-| Source | Not a Nexus upload — the GitHub repo covers GPL-3 §6, and the complete source is inside the main archive too |
+| Source | Not a Nexus upload. GPL-3 §6(d) lets you offer the corresponding source from a designated place — that is the GitHub repo, which the archive and the page both link |

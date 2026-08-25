@@ -19,8 +19,8 @@ comes from the original mod.
 Upstream source: https://github.com/jpsteel/skyrimbestiary
 
 CORRESPONDING SOURCE (GPL-3.0, section 6):
-The complete corresponding source for this binary is included in this download
-under source/complete-source/, and the diff against upstream is in
+The complete corresponding source for this binary is published in the patch
+repository under source/complete-source/, and the diff against upstream is in
 source/DragonbornsBestiary-1.7.99-compat.patch.
 
 CHANGES FROM THE ORIGINAL:
